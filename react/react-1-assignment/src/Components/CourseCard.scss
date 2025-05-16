@@ -2,27 +2,28 @@
         margin: 10px;
         border-radius: 10px;
         max-width: 600px;
-        background-color: #B7D1DA;
+        background-color: #f5f5f5;
         color: #084B83;
         box-shadow: 3px 3px rgba($color: #000000, $alpha: 0.2);
         display: grid;
         grid-template:
                 "a a a" 100px
                 "b c c" 250px
-                "d d d" 50px/ 1fr 1fr 1fr;
+                "d d d" 75px/ 1fr 1fr 1fr;
 
         .title {
+                border-radius: 10px 10px 0 0;
                 display: flex;
                 justify-content: left;
                 align-items: center;
-                padding: auto;
                 width: 100%;
                 text-align: left;
-                padding-top: 0.5rem;
-                padding-left: 0;
                 font-size: 20px;
                 line-height: 20px;
                 font-family: Arial, Helvetica, sans-serif;
+                background-color: #FFD275;
+                color: black;
+                border-bottom: #000000 solid 1px;
                 grid-area: a;
                 .new-icon{
                         position: relative;
@@ -42,34 +43,34 @@
                 flex-direction: column;
                 justify-content: end;
                 height: 80%;
-                margin: auto;
+                padding-left: 1rem;
+                padding: auto;
                 row-gap: 1rem;
+                color: black;
+                font-size: 25px;
+                line-height: 25px;
                 p {
+                        margin: 0;
                         font-family: Arial, Helvetica, sans-serif;
-                        font-size: 25px;
-                        line-height: 25px;
-                        margin: 0px;
+                        border-bottom: #000000 dotted;
                 }
-
-                .new-icon {
-                        font-size: 25px;
-                        line-height: 25px;
+                .icon {
+                        margin-right:   1rem;
                 }
 
         }
 
         .course-image {
+                padding: 1rem;
                 grid-area: c;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding-bottom: 1rem;
                 img {
-                        max-width: 100%;
-                        max-height: 100%;
+                        width: 100%;
+                        height: 100%;
                         border-radius: 5px;
                         border: #084B83 3px;
-                        box-shadow: 3px 3px rgba(0, 0, 0,0.1);
                 }
                 
         }
@@ -79,6 +80,11 @@
                 flex-direction: row;
                 justify-content: end;
                 column-gap: 1rem;
-                padding: 10px;
+                padding: 1rem;
+                button{
+                        background-color: #10162f;
+                        color: #ffffff;
+                        border-radius: 4px;
+                }
         }
 }

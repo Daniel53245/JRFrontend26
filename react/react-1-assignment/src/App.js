@@ -9,11 +9,24 @@ function App() {
   let language = "English";
   let location = "Canberra";
   let duration = "5 weeks"
-  let diffculty = 0;
+  let diffculty = "beginner";
   let isNew = true;
   let courseImage = image
   return (
+    <>
+
     <CourseCatalog></CourseCatalog>
+    <CourseCard
+      courseName={courseName}
+      courseImage={courseImage}
+      price={price}
+      language={language}
+      location={location}
+      duration={duration}
+      diffculty={diffculty}
+      isNew={isNew}
+    ></CourseCard>
+    </>
   );
 }
 

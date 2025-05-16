@@ -14,8 +14,20 @@ export const CourseCatalog = () => {
     enrollmentCount:0,
     id: new Date()
   }
+  let courseInfo2 = {
+    courseName:"JR Machine Learning Master",
+    price:"2500 AUD",
+    language:"English",
+    location:"Canberra",
+    duration:"2 weeks",
+    diffculty:"advanced",
+    isNew:true,
+    courseImage:"",
+    enrollmentCount:0,
+    id: new Date()
+  }
 
-  const [courseList,setCourseList] = useState([courseInfo])
+  const [courseList,setCourseList] = useState([courseInfo,courseInfo2])
   const handleEnrollment =(courseToEnrollID) => {
     console.debug("Enter handle Enrollment")
     setCourseList((prev)=>{

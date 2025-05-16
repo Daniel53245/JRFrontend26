@@ -21,8 +21,8 @@ const CourseDiffculty = {
   ADVANCED:"advanced",
 }
 
-
 const CourseCard=({
+    id,
     courseName,
     price,
     language,
@@ -30,7 +30,9 @@ const CourseCard=({
     location,
     diffculty,
     isNew,
-    courseImage
+    courseImage,
+    enrollmentCount,
+    handleEnrollment,
   }) =>{
     let enrollButtonText = ""
     switch(diffculty){
@@ -50,7 +52,7 @@ return (
       <div className='title'>
         {isNew && <FiberNewIcon className='new-icon'/>}
         <h2 className='course-name'>{courseName}</h2>
-        <p className='enrollment-count'>Enrollment</p>
+        <p className='enrollment-count'>Enrollment:{enrollmentCount}</p>
       </div>
       <div className='course-info'>
         <p><LocationPinIcon className='icon' />{price}</p>
@@ -62,7 +64,10 @@ return (
         <img src={courseImage} alt='course image'></img>
       </div>
       <dib className='buttons-container'>
-        <button className='enroll-button'>{enrollButtonText}</button>
+        <button className='enroll-button' onClick={()=>{
+          console.debug("Clicked Enrollbutton")
+          handleEnrollment(id)
+        }}>{enrollButtonText}</button>
         <button className='review-button'>Review</button>
       </dib>
     </div>

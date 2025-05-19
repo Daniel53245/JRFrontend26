@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import CourseCard from './CourseCard'
+import { hashString } from '../utils/hash'
 
 export const CourseCatalog = () => {
   let courseInfo = {
@@ -10,26 +11,27 @@ export const CourseCatalog = () => {
     duration:"2 weeks",
     diffculty:"beginner",
     isNew:true,
-    courseImage:"",
+    courseImage:null,
     enrollmentCount:0,
-    id: new Date()
+    isComplete:false,
+    id: new Date() + hashString("JR Forntend 26")
   }
   let courseInfo2 = {
-    courseName:"JR Machine Learning Master",
+    courseName:"Extraaaaaaaaaaaaaa long titileeeeeeeeeeeeeeeeeeeeeee",
     price:"2500 AUD",
     language:"English",
     location:"Canberra",
     duration:"2 weeks",
     diffculty:"advanced",
     isNew:true,
-    courseImage:"",
+    courseImage:null,
+    isComplete:false,
     enrollmentCount:0,
-    id: new Date()
+    id: new Date() + hashString("Extraaaaaaaaaaaaaa long titileeeeeeeeeeeeeeeeeeeeeee")
   }
 
   const [courseList,setCourseList] = useState([courseInfo,courseInfo2])
   const handleEnrollment =(courseToEnrollID) => {
-    console.debug("Enter handle Enrollment")
     setCourseList((prev)=>{
       return prev.map((course)=>{
         return course.id === courseToEnrollID ? {...course,'enrollmentCount':course.enrollmentCount+1}: course

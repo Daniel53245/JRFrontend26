@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './CourseCard.scss'
 import FiberNewIcon from '@mui/icons-material/FiberNew';
 import LocationPinIcon from '@mui/icons-material/LocationPin';
@@ -34,37 +34,82 @@ const CourseCard = ({
   courseImage,
   enrollmentCount,
   handleEnrollment,
+  isComplete,
 }) => {
   const [leavingReivew, setLeavingReview] = useState(false)
+  const [reviewContent, setReviewContent] = useState("")
+  const [titleScrollDuration, setTitleScrollDuration] = useState(0);
+  const [titleScroll, setTitleScroll] = useState(false);
+  const handleReviewContentChange = (event) => {
+    setReviewContent(event.target.value)
+  }
 
-  let enrollButtonText = ""
+  const titleContentRef = useRef(null);
+  useEffect(() => {
+    if (!titleContentRef.current) {
+      console.log("WTF ref does not exist")
+    }
+    const courseTitleWidth = titleContentRef.current.scrollWidth;
+    const courseTitleSize = titleContentRef.current.offsetWidth;
+    if (courseTitleWidth > courseTitleSize) {
+      const pixelPerSecond = 50;
+      const totalDistance = courseTitleWidth + courseTitleSize;
+      setTitleScrollDuration(totalDistance / pixelPerSecond)
+      setTitleScroll(true)
+      console.log("Titile is going to scroll")
+    } else {
+      setTitleScroll(false)
+      console.log("Titile is not going to roll")
+    }
+  }, [courseName])
+
+
+  let enrollButtonText = "";
+  
   switch (diffculty) {
     case CourseDiffculty.BEGINNER:
       enrollButtonText = "Satrt Learning Now!";
       break;
-    case CourseDiffculty.ADVANCED, CourseDiffculty.INTERMEDIATE:
+    case CourseDiffculty.ADVANCED|| CourseDiffculty.INTERMEDIATE:
       enrollButtonText = "Enroll Now";
       break;
     default:
       enrollButtonText = "Enroll";
       break;
-    }
+  }
 
-    const submitReivew = (event) =>{
-      event.preventDefault()
-    }
-    const cancelReview = (event) => {
-      event.preventDefault()
-    }
-    
+
+  const submitReivew = (event) => {
+    console.debug("Review Submitte:" + reviewContent)
+    setLeavingReview(false)
+    setReviewContent("")
+    event.preventDefault()
+  }
+  const cancelReview = (event) => {
+    setLeavingReview(false)
+    setReviewContent("")
+    event.preventDefault()
+
+  }
+
   return (
     <>
       <div className='course-card'>
         <div className='title'>
-          {isNew && <FiberNewIcon className='new-icon' />}
-          <h2 className='course-name'>{courseName}</h2>
-          <p className='enrollment-count'>Enrollment:{enrollmentCount}</p>
-        </div>
+  {isNew && <FiberNewIcon className='new-icon' />}
+
+  <div className="course-name-wrapper">
+    <h2
+      className={`course-name ${titleScroll ? "scroll-title" : ""}`}
+      ref={titleContentRef}
+      style={titleScroll ? { animationDuration: `${titleScrollDuration}s` } : {}}
+    >
+      {courseName}
+    </h2>
+  </div>
+
+  <p className='enrollment-count'>Enroll#:{enrollmentCount}</p>
+</div>
         <div className='course-info'>
           <p><LocationPinIcon className='icon' />{price}</p>
           <p><PriceChangeOutlinedIcon className='icon' />{location}</p>
@@ -72,21 +117,23 @@ const CourseCard = ({
           <p><LanguageIcon className='icon' />{language}</p>
         </div>
         <div className='course-image'>
-          <img src={courseImage} alt='course image'></img>
+          <img src={courseImage} alt='course content'></img>
         </div>
         <div className='buttons-container'>
           <button className='enroll-button' onClick={() => {
-            console.debug("Clicked Enrollbutton")
             handleEnrollment(id)
           }}>{enrollButtonText}</button>
-          <button className='review-button'>Review</button>
+          <button className='review-button' onClick={() => setLeavingReview(true)}>Review</button>
         </div>
+        {leavingReivew && <form className="review-form">
+          <textarea name="Leave you review" placeholder='leave your reveiw' value={reviewContent} onChange={handleReviewContentChange}></textarea>
+          <div className='review-buttons'>
+            <button onClick={submitReivew}>Submit Reivew</button>
+            <button onClick={cancelReview}>Cancel</button>
+          </div>
+        </form>}
       </div>
-      <form className="review-form">
-        <textarea name="Leave you review" placeholder='leave your reveiw' content=''></textarea>
-        <button onClick={submitReivew}>Submit Reivew</button>
-        <button onClick={cancelReview}>Cancel</button>
-      </form>
+
     </>
   )
 }

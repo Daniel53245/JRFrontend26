@@ -1,0 +1,15 @@
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/build_output/first-application
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/build_output/first-application.deps.json
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/build_output/first-application.runtimeconfig.json
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/build_output/first-application.dll
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/build_output/first-application.pdb
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.GeneratedMSBuildEditorConfig.editorconfig
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.AssemblyInfoInputs.cache
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.AssemblyInfo.cs
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.csproj.CoreCompileInputs.cache
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.sourcelink.json
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.dll
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/refint/first-application.dll
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.pdb
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.genruntimeconfig.cache
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/ref/first-application.dll

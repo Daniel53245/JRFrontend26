@@ -13,3 +13,8 @@
 /home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.pdb
 /home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/first-application.genruntimeconfig.cache
 /home/dai/gitrepo/JRFrontend26/Csharp/first-application/obj/Debug/net8.0/ref/first-application.dll
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/bin/Debug/net8.0/first-application
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/bin/Debug/net8.0/first-application.deps.json
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/bin/Debug/net8.0/first-application.runtimeconfig.json
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/bin/Debug/net8.0/first-application.dll
+/home/dai/gitrepo/JRFrontend26/Csharp/first-application/bin/Debug/net8.0/first-application.pdb

@@ -88,8 +88,8 @@ type Props = {};
 const WeatherHome = (props: Props) => {
   return (
     <main>
-      <div className="flex w-200   gap-x-0.5 my-8 bg-zinc-100 m-auto p-3 rounded-lg">
-        <div className="flex flex-col current-weather bg-indigo-500 rounded-lg text-white w-1/3 text-center p-3 mr-6">
+      <div className="all-conainer flex w-200   gap-x-0.5 my-8 bg-zinc-100 m-auto p-3 rounded-lg">
+        <div className="left-container flex flex-col current-weather bg-indigo-500 rounded-lg text-white w-1/3 text-center p-3 mr-6">
           <p className="text-left text-sm mb-3">
             {sampleData.currentCity.date}
           </p>
@@ -101,10 +101,10 @@ const WeatherHome = (props: Props) => {
               sampleData.currentCity.maxTemp +
               "\u00B0"}
           </p>
-          <div className="flex justify-center items-center">
+          <div className="weather-icon-contaienr flex justify-center items-center">
             <TiWeatherSunny className="w-24 h-24" />
           </div>
-          <div className="mt-auto flex justify-around rounded-lg p-2 bg-slate-300 text-black gap-x-8">
+          <div className="wiget-container mt-auto flex justify-around rounded-lg p-2 bg-slate-300 text-black gap-x-2">
             <div className="wiget flex flex-col items-center justify-center ">
               <WiHumidity className="wiget-icon w-6 h-6" />
               <p className="wiget-content text-sm">
@@ -149,7 +149,7 @@ const WeatherHome = (props: Props) => {
               </div>
             ))}
           </div>
-          <div className="cities mb-2 flex flex-col">
+          <div className="cities-container mb-2 flex flex-col">
             <div className="search-bar bg-white flex gap-1 shadow-md w-50% mr-auto rounded-md">
               <input
                 className="grow-1 max-w-70% pl-3"

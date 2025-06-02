@@ -1,9 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TiWeatherSunny } from "react-icons/ti";
 import { WiHumidity } from "react-icons/wi";
 import { FaWind } from "react-icons/fa";
 import { TbUvIndex } from "react-icons/tb";
 import { FaTemperatureHalf } from "react-icons/fa6";
+import { getWeather } from "../../services/weatherAPI"
+
+export type CurrentCityWeather = {
+  date: string;
+  city: string;
+  currentTemp: string;
+  minTemp: string;
+  maxTemp: string;
+  weather: string;
+  water: string;
+  wind: string;
+  uv: string;
+  feelTemp: string;
+};
+
+export type ForecastItem = {
+  id: string;
+  day: string;
+  date: string;
+  weather: string;
+  minTemp: string;
+  maxTemp: string;
+};
+
+
+export type OtherCityWeather = {
+  id: string;
+  city: string;
+  weather: string;
+  minTemp: string;
+  maxTemp: string;
+};
+
+export type WeatherData = {
+  currentCity: CurrentCityWeather;
+  forecast: ForecastItem[];
+  otherCities: OtherCityWeather[];
+};
+
+
 const sampleData = {
   currentCity: {
     date: "23 July, Sunday 12:00",
@@ -53,28 +93,28 @@ const sampleData = {
   ],
   otherCities: [
     {
-      id: "0",
+      id: "4",
       city: "Melbourne",
       weather: "sunny",
       minTemp: "25",
       maxTemp: "32",
     },
     {
-      id: "1",
+      id: "5",
       city: "Melbourne",
       weather: "sunny",
       minTemp: "25",
       maxTemp: "32",
     },
     {
-      id: "2",
+      id: "6",
       city: "Melbourne",
       weather: "sunny",
       minTemp: "25",
       maxTemp: "32",
     },
     {
-      id: "3",
+      id: "7",
       city: "Melbourne",
       weather: "sunny",
       minTemp: "25",
@@ -86,6 +126,25 @@ const sampleData = {
 type Props = {};
 
 const WeatherHome = (props: Props) => {
+  const [weatherData, setWeatherData] = useState("")
+  //fetch weather data 
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        try {
+          const result = await getWeather();
+          setWeatherData(result.data);
+          console.debug(result.data)
+        } catch (error) {
+          console.error("Error while fetching weather:", error);
+          return -1
+        };
+      };
+      fetchData();
+    },
+    []
+  )
+
   return (
     <main>
       <div className="all-conainer flex w-200   gap-x-0.5 my-8 bg-zinc-100 m-auto p-3 rounded-lg">
@@ -135,7 +194,7 @@ const WeatherHome = (props: Props) => {
         <div className="right-container flex flex-col max-w place-content-between">
           <div className="forecast-container flex justify-evenly ">
             {sampleData.forecast.map((item) => (
-              <div className="forecast-card flex flex-col p-3" key="{item.id}">
+              <div className="forecast-card flex flex-col p-3" key={item.id}>
                 <p className="font-semibold text-2xl mb-1">{item.day}</p>
                 <p className="text-sm text-center text-shadow-lg">
                   {item.date}
@@ -165,7 +224,7 @@ const WeatherHome = (props: Props) => {
             </div>
             <div className="cities-view flex justify-around">
               {sampleData.otherCities.map((item) => (
-                <div className="city-card flex flex-col justify-center items-center p-2">
+                <div key={item.id} className="city-card flex flex-col justify-center items-center p-2">
                   <TiWeatherSunny className="w-12 h-12" />
                   <p>{item.city}</p>
                   <p>{item.minTemp + "~" + item.maxTemp}</p>

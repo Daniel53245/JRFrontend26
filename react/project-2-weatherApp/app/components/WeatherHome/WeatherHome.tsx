@@ -5,44 +5,7 @@ import { FaWind } from "react-icons/fa";
 import { TbUvIndex } from "react-icons/tb";
 import { FaTemperatureHalf } from "react-icons/fa6";
 import { getWeather } from "../../services/weatherAPI"
-
-export type CurrentCityWeather = {
-  date: string;
-  city: string;
-  currentTemp: string;
-  minTemp: string;
-  maxTemp: string;
-  weather: string;
-  water: string;
-  wind: string;
-  uv: string;
-  feelTemp: string;
-};
-
-export type ForecastItem = {
-  id: string;
-  day: string;
-  date: string;
-  weather: string;
-  minTemp: string;
-  maxTemp: string;
-};
-
-
-export type OtherCityWeather = {
-  id: string;
-  city: string;
-  weather: string;
-  minTemp: string;
-  maxTemp: string;
-};
-
-export type WeatherData = {
-  currentCity: CurrentCityWeather;
-  forecast: ForecastItem[];
-  otherCities: OtherCityWeather[];
-};
-
+import type {response} from "../../services/weatherAPI"
 
 const sampleData = {
   currentCity: {
@@ -123,21 +86,32 @@ const sampleData = {
   ],
 };
 
+enum WeatherType {
+  SUNNY = "sunny",
+  CLOUDY = "cloudy",
+  RAINY = "rainy",
+  SNOW = "snow",
+}
+const getWeatherIcon = () => {
+  //TODO: return weather icon accoridng to type of weather 
+  return -1
+}
+
 type Props = {};
 
 const WeatherHome = (props: Props) => {
   const [weatherData, setWeatherData] = useState("")
+  const [fetchDataError,setfetchDataError] = useState("")
   //fetch weather data 
   useEffect(
     () => {
       const fetchData = async () => {
         try {
           const result = await getWeather();
-          setWeatherData(result.data);
-          console.debug(result.data)
+          console.debug("Weather result from weather home \n",result)
         } catch (error) {
           console.error("Error while fetching weather:", error);
-          return -1
+          setfetchDataError(String(error))
         };
       };
       fetchData();

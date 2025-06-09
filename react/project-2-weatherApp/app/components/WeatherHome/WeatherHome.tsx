@@ -6,6 +6,7 @@ import { TbUvIndex } from "react-icons/tb";
 import { FaTemperatureHalf } from "react-icons/fa6";
 import { getWeather } from "../../services/weatherAPI"
 import type {response} from "../../services/weatherAPI"
+import {formatUTCString} from "./utils"
 
 const sampleData = {
   currentCity: {
@@ -100,7 +101,7 @@ const getWeatherIcon = () => {
 type Props = {};
 
 const WeatherHome = (props: Props) => {
-  const [weatherData, setWeatherData] = useState("")
+  const [weatherData, setWeatherData] = useState<response>()
   const [fetchDataError,setfetchDataError] = useState("")
   //fetch weather data 
   useEffect(
@@ -108,6 +109,7 @@ const WeatherHome = (props: Props) => {
       const fetchData = async () => {
         try {
           const result = await getWeather();
+          setWeatherData(result)
           console.debug("Weather result from weather home \n",result)
         } catch (error) {
           console.error("Error while fetching weather:", error);
@@ -118,20 +120,35 @@ const WeatherHome = (props: Props) => {
     },
     []
   )
+  if(weatherData === undefined){
+    return (
+      <>
+        <h1>Error Fetching error data</h1>
+        <p>Error message /n {fetchDataError.toString()}</p>
+      </>
+    )
+  }
 
   return (
     <main>
+      
       <div className="all-conainer flex w-200   gap-x-0.5 my-8 bg-zinc-100 m-auto p-3 rounded-lg">
         <div className="left-container flex flex-col current-weather bg-indigo-500 rounded-lg text-white w-1/3 text-center p-3 mr-6">
+          {/* TODO dd mm weekday time this is utc time */}
           <p className="text-left text-sm mb-3">
-            {sampleData.currentCity.date}
+            {formatUTCString(weatherData.list[0].dt)}
           </p>
+          {/* //TODO City name */}
           <p className="text-xl mb-4">{sampleData.currentCity.city}</p>
-          <p className="text-6xl mb-1">{sampleData.currentCity.currentTemp}</p>
+          {/* //TODO current temperature  */}
+          <p className="text-6xl mb-1">
+            {weatherData.list[0].main.temp.toFixed()} <span className="text-3xl">&#8451;</span>
+          </p>
           <p className="text-xl mb-2 font-light">
-            {sampleData.currentCity.minTemp +
+            {/* //TODO min temperature and max temperature */}
+            {weatherData.list[0].main.temp_min.toFixed() +
               "~" +
-              sampleData.currentCity.maxTemp +
+              weatherData.list[0].main.temp_max.toFixed() +
               "\u00B0"}
           </p>
           <div className="weather-icon-contaienr flex justify-center items-center">

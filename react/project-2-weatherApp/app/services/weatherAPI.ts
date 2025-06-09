@@ -10,7 +10,7 @@ export interface response {//the response structure of open api 2.5
 };
 
 export interface ForecastListItem{
-        dt:number,
+        dt:number, //Time of data forecasted, unix, UTC
         main:{
                 temp:number,
                 feels_like:number,
@@ -65,9 +65,10 @@ export interface City{
 };
 
 export const getWeather = async ():Promise<response> => {
-        const lat = 35;
-        const lon = 139;
-        const key = "70c803b3a6abad07738f556f76a3cbd6";
-        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`;
+        const lat = 34;
+        const lon = 151;
+        const key = "b36fa0216ef848b1090344d649a7f8c3";
+        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
         return (await axios.get<response>(url)).data;        
 }
+

@@ -67,7 +67,7 @@ export interface City{
 export const getWeather = async ():Promise<response> => {
         const lat = 34;
         const lon = 151;
-        const key = "b36fa0216ef848b1090344d649a7f8c3";
+        const key = "";
         const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
         return (await axios.get<response>(url)).data;        
 }

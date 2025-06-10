@@ -1,4 +1,5 @@
 import axios from "axios";
+const key = import.meta.env.VITE_OPENWEATHER_API_KEY;
 //TODO: resolve city name 
 //TODO: create type interface for the api
 export interface response {//the response structure of open api 2.5
@@ -67,7 +68,6 @@ export interface City{
 export const getWeather = async ():Promise<response> => {
         const lat = 34;
         const lon = 151;
-        const key = "";
         const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
         return (await axios.get<response>(url)).data;        
 }

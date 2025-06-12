@@ -65,9 +65,15 @@ export interface City{
         sunset:number, //sunset time ,unix UTC
 };
 
-export const getWeather = async ():Promise<response> => {
-        const lat = 34;
-        const lon = 151;
+export const getWeather = async (city_name:String="Sydney"):Promise<response> => {
+        const limit = 5
+        const city_url = `http://api.openweathermap.org/geo/1.0/direct?q=${city_name}&limit=${limit}&appid=${key}`
+        console.log(`Query city : ${city_url}`)
+        const city_response = ((await axios.get(city_url)).data)
+
+        const lat = city_response[0].lat;
+        const lon = city_response[0].lon;
+        console.log(`Checking city on lat:${lat} lon:${lon}`)
         const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
         return (await axios.get<response>(url)).data;        
 }

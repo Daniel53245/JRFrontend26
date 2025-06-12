@@ -7,6 +7,7 @@ import { FaTemperatureHalf } from "react-icons/fa6";
 import { getWeather } from "../../services/weatherAPI"
 import type {response} from "../../services/weatherAPI"
 import {formatUTCString} from "./utils"
+import { WiDaySunny,WiDayCloudy,WiRain,WiSnow,WiThunderstorm,WiFog,WiSprinkle  } from "react-icons/wi";
 
 const sampleData = {
   currentCity: {
@@ -88,14 +89,42 @@ const sampleData = {
 };
 
 enum WeatherType {
-  SUNNY = "sunny",
-  CLOUDY = "cloudy",
-  RAINY = "rainy",
-  SNOW = "snow",
+  CLEAR="Clear",
+  CLOUDS= "Clouds",
+  RAIN = "Rain",
+  SNOW = "Snow",
+  THUNDERSTORM = "Thunderstorm",
+  DRIZZLE = "Drizzle",
+  MIST = "Mist",
 }
-const getWeatherIcon = () => {
+
+const getWeatherIcon = (weather:WeatherType,size:6|12) => {
   //TODO: return weather icon accoridng to type of weather 
-  return -1
+  // var tailwindClass = `w-${width} h-${height}` tail wind does not work with dynamic values
+  //create a record for it 
+  const sizeClasses = {
+    6: 'w-6 h-6',
+    12: 'w-12 h-12',
+  };
+  const tailwindClass = sizeClasses[size] || 'w-6 h-6'; // default to 6 if not found
+  switch(weather){
+    case WeatherType.CLEAR:
+      return (<WiDaySunny ></WiDaySunny>)
+    case WeatherType.CLOUDS:
+      return (<WiDayCloudy ></WiDayCloudy>)
+    case WeatherType.RAIN:
+      return (<WiRain ></WiRain>)
+    case WeatherType.SNOW:
+      return (<WiSnow ></WiSnow>)
+    case WeatherType.THUNDERSTORM:
+      return (<WiThunderstorm ></WiThunderstorm>)
+    case WeatherType.DRIZZLE:
+      return (<WiSprinkle ></WiSprinkle>)
+    case WeatherType.MIST:
+      return (<WiFog ></WiFog>)
+    default:
+      return <p>Icon not included</p>
+  }
 }
 
 type Props = {};
@@ -123,7 +152,7 @@ const WeatherHome = (props: Props) => {
   if(weatherData === undefined){
     return (
       <>
-        <h1>Error Fetching error data</h1>
+        <h1 className="">Error Fetching error data</h1>
         <p>Error message /n {fetchDataError.toString()}</p>
       </>
     )
@@ -132,14 +161,14 @@ const WeatherHome = (props: Props) => {
   return (
     <main>
       
-      <div className="all-conainer flex w-200   gap-x-0.5 my-8 bg-zinc-100 m-auto p-3 rounded-lg">
+      <div className="all-conainer flex w-200   gap-x-0.5 my-8  m-auto p-3 rounded-lg">
         <div className="left-container flex flex-col current-weather bg-indigo-500 rounded-lg text-white w-1/3 text-center p-3 mr-6">
           {/* TODO dd mm weekday time this is utc time */}
           <p className="text-left text-sm mb-3">
             {formatUTCString(weatherData.list[0].dt)}
           </p>
           {/* //TODO City name */}
-          <p className="text-xl mb-4">{sampleData.currentCity.city}</p>
+          <p className="text-xl mb-4">{weatherData.city.name===""?"Sydney":weatherData.city.name}</p>
           {/* //TODO current temperature  */}
           <p className="text-6xl mb-1">
             {weatherData.list[0].main.temp.toFixed()} <span className="text-3xl">&#8451;</span>
@@ -152,19 +181,23 @@ const WeatherHome = (props: Props) => {
               "\u00B0"}
           </p>
           <div className="weather-icon-contaienr flex justify-center items-center">
-            <TiWeatherSunny className="w-24 h-24" />
+            {/* TODO weather Icon */}
+            {getWeatherIcon(weatherData.list[0].weather[0].main as WeatherType,24,24)}
+            {/* <TiWeatherSunny className="w-24 h-24" /> */}
           </div>
           <div className="wiget-container mt-auto flex justify-around rounded-lg p-2 bg-slate-300 text-black gap-x-2">
             <div className="wiget flex flex-col items-center justify-center ">
               <WiHumidity className="wiget-icon w-6 h-6" />
               <p className="wiget-content text-sm">
-                {sampleData.currentCity.water}
+                {weatherData.list[0].main.humidity + "%"}
               </p>
             </div>
             <div className="wiget w-fit text-nowrap wiget flex flex-col items-center justify-center ">
               <FaWind className="wiget-icon w-6 h-6 " />
               <p className="wiget-content text-sm">
-                {sampleData.currentCity.wind}
+                {typeof(weatherData.list[0].wind)!== "undefined"?
+                  weatherData.list[0].wind.speed.toFixed() + "m/s" :
+                  "N/A"}
               </p>
             </div>
             <div className="wiget flex flex-col items-center justify-center ">
@@ -200,7 +233,7 @@ const WeatherHome = (props: Props) => {
             ))}
           </div>
           <div className="cities-container mb-2 flex flex-col">
-            <div className="search-bar bg-white flex gap-1 shadow-md w-50% mr-auto rounded-md">
+            <div className="search-bar bg-grey flex gap-1 shadow-md w-50% mr-auto rounded-md">
               <input
                 className="grow-1 max-w-70% pl-3"
                 type="text"

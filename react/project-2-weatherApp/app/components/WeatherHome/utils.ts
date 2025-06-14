@@ -33,3 +33,53 @@ export function formatUTCString(
 
   return `${dd} ${mm} ${weekday} ${time}`;
 }
+
+export function mapResponseToForecast(apiResponse: any) {
+  const forecastMap = new Map<string, any[]>();
+  const todayDateStr = new Date().toISOString().split("T")[0];
+
+  for (const entry of apiResponse.list) {
+    const date = new Date(entry.dt * 1000);
+    const key = date.toISOString().split("T")[0]; // yyyy-mm-dd
+
+    if (key === todayDateStr) continue; // skip today's data
+
+    if (!forecastMap.has(key)) {
+      forecastMap.set(key, []);
+    }
+
+    forecastMap.get(key)?.push(entry);
+  }
+
+  const result: any[] = [];
+  let dayIndex = 0;
+
+  for (const [dateStr, entries] of forecastMap) {
+    if (dayIndex >= 4) break;
+
+    const temps = entries.map(e => e.main.temp);
+    const minTemp = Math.min(...temps);
+    const maxTemp = Math.max(...temps);
+
+    const date = new Date(dateStr);
+    const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+    const dayFormatted = `${date.getDate()} ${date.toLocaleDateString("en-US", { month: "long" })}`;
+
+    // Pick the weather at around 12:00 PM if possible
+    let weatherEntry = entries.find(e => new Date(e.dt * 1000).getHours() === 12);
+    if (!weatherEntry) weatherEntry = entries[Math.floor(entries.length / 2)];
+
+    result.push({
+      id: `${dayIndex}`,
+      day: dayName,
+      date: dayFormatted,
+      weather: weatherEntry.weather[0].main,
+      minTemp: Math.round(minTemp).toString(),
+      maxTemp: Math.round(maxTemp).toString()
+    });
+
+    dayIndex++;
+  }
+
+  return result;
+}
